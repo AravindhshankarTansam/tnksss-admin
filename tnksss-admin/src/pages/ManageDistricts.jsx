@@ -1,33 +1,23 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useState } from 'react';
 import { TextField, Button, List, ListItem, Typography } from '@mui/material';
 
 export default function ManageDistricts() {
-  const [districts, setDistricts] = useState([]);
+  const [districts, setDistricts] = useState([
+    { id: 1, name: "Chennai" },
+    { id: 2, name: "Madurai" }
+  ]);
   const [newDistrict, setNewDistrict] = useState('');
 
-  useEffect(() => {
-    fetchDistricts();
-  }, []);
-
-  const fetchDistricts = async () => {
-    try {
-      const res = await axios.get('/api/admin/districts');
-      setDistricts(res.data);
-    } catch (error) {
-      alert('Failed to fetch districts');
+  const addDistrict = () => {
+    if (!newDistrict.trim()) {
+      alert('Please enter a district name');
+      return;
     }
-  };
-
-  const addDistrict = async () => {
-    if (!newDistrict.trim()) return alert('Please enter a district name');
-    try {
-      await axios.post('/api/admin/districts', { name: newDistrict });
-      setNewDistrict('');
-      fetchDistricts();
-    } catch (error) {
-      alert(error.response?.data?.error || 'Failed to add district');
-    }
+    // Generate a fake ID and add to state
+    const newId = districts.length > 0 ? districts[districts.length - 1].id + 1 : 1;
+    const newDistrictObj = { id: newId, name: newDistrict.trim() };
+    setDistricts([...districts, newDistrictObj]);
+    setNewDistrict('');
   };
 
   return (
