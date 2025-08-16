@@ -5,7 +5,7 @@ import ExpandMore from "@mui/icons-material/ExpandMore";
 import { Link, useLocation } from "react-router-dom";
 import pagesConfig from "../config/pagesConfig.jsx";
 
-const drawerWidth = 240;
+const drawerWidth = 290;
 
 export default function Sidebar() {
   const [openContentMenu, setOpenContentMenu] = useState(false);
@@ -55,7 +55,7 @@ export default function Sidebar() {
                 key={page.value}
                 component={Link}
                 to={page.route}
-                sx={{ pl: 4 }}
+                sx={{ pl: 6 }}
                 selected={location.pathname === page.route}
               >
                 <ListItemText primary={page.text} />

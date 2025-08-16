@@ -52,3 +52,19 @@ db.exec(`
   );
 `);
 
+db.exec(`
+  CREATE TABLE IF NOT EXISTS districts_master (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    code TEXT UNIQUE NOT NULL,
+    name TEXT NOT NULL
+  )
+`);
+
+db.exec(`
+  CREATE TABLE IF NOT EXISTS notification_entries (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    textEn TEXT DEFAULT '',
+    textTa TEXT DEFAULT '',
+    publish INTEGER DEFAULT 0
+  )
+`);

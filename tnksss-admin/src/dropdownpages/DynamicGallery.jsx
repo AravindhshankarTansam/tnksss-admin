@@ -47,7 +47,7 @@ export default function DynamicGallery() {
 
   // Fetch gallery data
   useEffect(() => {
-    fetch(`${API_BASE}/gallery`)
+    fetch(`${API_BASE}/gallery/admin/gallery`)
       .then(res => res.json())
       .then(data => setRows(data))
       .catch(err => console.error(err));
@@ -71,7 +71,7 @@ export default function DynamicGallery() {
     images.forEach(file => formData.append("images", file));
 
     try {
-      const res = await fetch(`${API_BASE}/gallery`, { method: "POST", body: formData });
+      const res = await fetch(`${API_BASE}/gallery/admin/gallery`, { method: "POST", body: formData });
       if (!res.ok) throw new Error("Failed to save");
       const newEntry = await res.json();
       setRows(prev => [...prev, newEntry]);
@@ -83,16 +83,28 @@ export default function DynamicGallery() {
     }
   };
 
-  const toggleStatus = async (id) => {
-    try {
-      const res = await fetch(`${API_BASE}/gallery/${id}/toggle`, { method: "PATCH" });
-      const updated = await res.json();
-      setRows(prev => prev.map(r => r.id === id ? { ...r, publish: updated.publish } : r));
-    } catch (err) { console.error(err); }
-  };
+const toggleStatus = async (id) => {
+  try {
+    const res = await fetch(`${API_BASE}/gallery/admin/gallery/${id}/toggle`, {
+      method: "PATCH",
+    });
+    if (!res.ok) throw new Error("Failed to toggle publish");
+
+    const updated = await res.json();
+    setRows((prev) =>
+      prev.map((row) => (row.id === id ? { ...row, publish: updated.publish } : row))
+    );
+  } catch (err) {
+    console.error(err);
+  }
+};
+
 
   return (
     <Box p={3}>
+      <Typography variant="h4" component="h1" gutterBottom>
+        Adding Gallery
+      </Typography>
       {/* Add button */}
       <Box display="flex" justifyContent="flex-end" mb={2}>
         <Button variant="contained" startIcon={<AddIcon />} onClick={() => setOpen(true)}>

@@ -19,7 +19,7 @@ export default function DynamicAboutus() {
   const [publish, setPublish] = useState(false);
   const [rows, setRows] = useState([]);
 
-  const API_BASE = "http://localhost:4000"; // change if needed
+  const API_BASE = "http://localhost:4000";
 
   const quillModules = {
     toolbar: [
@@ -40,7 +40,7 @@ export default function DynamicAboutus() {
 
   // Fetch About data on mount
   useEffect(() => {
-    fetch(`${API_BASE}/aboutus`)
+    fetch(`${API_BASE}/aboutus/admin/about_us`)
       .then(res => res.json())
       .then(data => setRows(data))
       .catch(err => console.error("Fetch error:", err));
@@ -61,7 +61,7 @@ export default function DynamicAboutus() {
     };
 
     try {
-      const res = await fetch(`${API_BASE}/aboutus`, {
+      const res = await fetch(`${API_BASE}/aboutus/admin/about_us`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload)
@@ -86,7 +86,7 @@ export default function DynamicAboutus() {
 
   const toggleStatus = async (id) => {
     try {
-      const res = await fetch(`${API_BASE}/aboutus/${id}/toggle`, { method: "PATCH" });
+      const res = await fetch(`${API_BASE}/aboutus/admin/about_us/${id}/toggle`, { method: "PATCH" });
       const updated = await res.json();
       setRows(prev =>
         prev.map(row => row.id === id ? { ...row, publish: updated.publish } : row)
@@ -98,6 +98,9 @@ export default function DynamicAboutus() {
 
   return (
     <Box p={3}>
+      <Typography variant="h4" component="h1" gutterBottom>
+        Adding About us
+      </Typography>
       {/* Add Button */}
       <Box display="flex" justifyContent="flex-end" mb={2}>
         <Button

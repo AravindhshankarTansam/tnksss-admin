@@ -6,7 +6,7 @@ import sliderRoutes from "./routes/slider.js";
 import aboutusRoutes from "./routes/aboutus.js";
 import galleryRoutes from "./routes/gallery.js";
 import contactRoutes from "./routes/contact.js";
-
+import districtMasterRoutes from "./routes/districtMaster.js";
 import fs from "fs";
 
 const __filename = fileURLToPath(import.meta.url);
@@ -25,10 +25,11 @@ if (!fs.existsSync(uploadsPath)) fs.mkdirSync(uploadsPath, { recursive: true });
 app.use("/uploads", express.static(uploadsPath));
 
 // Routes
-app.use("/slider", sliderRoutes);
+app.use("/slider", sliderRoutes); // now handles /public and /admin
 app.use("/aboutus", aboutusRoutes);
 app.use("/gallery", galleryRoutes);
 app.use("/contact", contactRoutes);
+app.use("/districts", districtMasterRoutes);
 
 // Test route
 app.get("/", (req, res) => res.send("Backend running"));
