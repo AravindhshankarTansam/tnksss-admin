@@ -93,6 +93,9 @@ export default function DynamicGallery() {
 
   return (
     <Box p={3}>
+      <Typography variant="h4" component="h1" gutterBottom>
+        Adding Gallery
+      </Typography>
       {/* Add button */}
       <Box display="flex" justifyContent="flex-end" mb={2}>
         <Button variant="contained" startIcon={<AddIcon />} onClick={() => setOpen(true)}>
